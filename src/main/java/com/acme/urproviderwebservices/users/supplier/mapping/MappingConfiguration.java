@@ -9,4 +9,5 @@ public class MappingConfiguration {
     public SupplierMapper supplierMapper(){
         return new SupplierMapper();
     }
+
 }

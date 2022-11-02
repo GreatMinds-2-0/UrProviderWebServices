@@ -16,8 +16,10 @@ import java.util.List;
 
 public class SupplierMapper implements Serializable {
     @Autowired
-    private EnhancedModelMapper mapper;
-
+    EnhancedModelMapper mapper;
+    //Object Mapping
+    //public SupplierResource
+    //public Supplier toModel(CreateSupplierResource resource){  }
     public SupplierResource toResource(Supplier model) {
         return mapper.map(model, SupplierResource.class);
     }
@@ -32,4 +34,5 @@ public class SupplierMapper implements Serializable {
     public Supplier toModel(UpdateSupplierResource resource) {
         return mapper.map(resource, Supplier.class);
     }
+
 }
