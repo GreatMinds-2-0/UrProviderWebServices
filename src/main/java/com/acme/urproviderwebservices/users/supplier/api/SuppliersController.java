@@ -1,19 +1,22 @@
 package com.acme.urproviderwebservices.users.supplier.api;
 
-import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
 import com.acme.urproviderwebservices.users.supplier.domain.service.SupplierService;
 import com.acme.urproviderwebservices.users.supplier.mapping.SupplierMapper;
 import com.acme.urproviderwebservices.users.supplier.resource.CreateSupplierResource;
 import com.acme.urproviderwebservices.users.supplier.resource.SupplierResource;
 import com.acme.urproviderwebservices.users.supplier.resource.UpdateSupplierResource;
+
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping(value = "/api/v1/suppliers")
+@RequestMapping(value = "/api/v1/suppliers", produces = "application/json")
 public class SuppliersController {
     private final SupplierService supplierService;
     private final SupplierMapper mapper;
@@ -33,7 +36,7 @@ public class SuppliersController {
     }
 
     @PostMapping
-    public ResponseEntity<SupplierResource> createSupplier(@RequestBody CreateSupplierResource resource) {
+    public ResponseEntity<SupplierResource> createSupplier(@Valid @RequestBody CreateSupplierResource resource) {
         return new ResponseEntity<>(mapper.toResource(supplierService.create(mapper.toModel(resource))), HttpStatus.CREATED);
     }
     @PutMapping("{supplierId}")
