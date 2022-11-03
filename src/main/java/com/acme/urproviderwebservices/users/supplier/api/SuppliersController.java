@@ -21,7 +21,7 @@ public class SuppliersController {
     private final SupplierService supplierService;
     private final SupplierMapper mapper;
 
-    public SuppliersController(SupplierService supplierService, SupplierMapper mapper) {
+    public SuppliersController( SupplierService supplierService, SupplierMapper mapper) {
         this.supplierService = supplierService;
         this.mapper = mapper;
     }

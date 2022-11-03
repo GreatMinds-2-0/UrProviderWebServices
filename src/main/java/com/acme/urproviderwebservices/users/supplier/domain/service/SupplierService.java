@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface SupplierService {
+public interface SupplierService  {
     List<Supplier> getAll();
     Page<Supplier> getAll(Pageable pageable);
     Supplier getById(Long supplierId);
