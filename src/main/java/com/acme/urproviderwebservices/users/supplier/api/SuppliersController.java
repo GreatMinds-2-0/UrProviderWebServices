@@ -27,7 +27,7 @@ public class SuppliersController {
     }
 
     @GetMapping
-    public Page<SupplierResource> getAllMusicians(Pageable pageable){
+    public Page<SupplierResource> getAllSuppliers(Pageable pageable){
         return mapper.modelListPage(supplierService.getAll(), pageable);
     }
     @GetMapping("{supplierId}")
