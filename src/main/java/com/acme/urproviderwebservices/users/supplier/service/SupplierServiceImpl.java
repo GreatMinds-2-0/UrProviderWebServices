@@ -51,7 +51,7 @@ public class SupplierServiceImpl implements SupplierService {
         Supplier supplierWithEmail = supplierRepository.findByEmail(supplier.getEmail());
         if (supplierWithEmail != null)
             throw new ResourceValidationException(ENTITY,
-                    "A owner with the same email already exist.");
+                    "A supplier with the same email already exist.");
 
         return supplierRepository.save(supplier);
     }
@@ -68,11 +68,11 @@ public class SupplierServiceImpl implements SupplierService {
 
         if(supplierWithEmail != null && !supplierWithEmail.getId().equals(supplierId))
             throw new ResourceValidationException(ENTITY,
-                    "An student with the same name already exists.");
+                    "A supplier with the same email already exists.");
 
-        return supplierRepository.findById(supplierId).map(student ->
+        return supplierRepository.findById(supplierId).map(existingSupplier ->
                         supplierRepository.save(
-                                student.withName(request.getName())
+                                existingSupplier.withName(request.getName())
                                         .withEmail(request.getEmail())
                                         .withPhoneNumber(request.getPhoneNumber())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
@@ -83,8 +83,15 @@ public class SupplierServiceImpl implements SupplierService {
 
         return supplierRepository.findById(supplierId).map(supplier -> {
             supplierRepository.delete(supplier);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
+            return ResponseEntity.ok().build(); })
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
 
+    }
+
+    @Override
+    public Supplier addProductToSupplier(Long supplierId, String productName) {
+        return supplierRepository.findById(supplierId).map(supplier -> {
+            return supplierRepository.save(supplier.addProduct(productName));
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
     }
 }

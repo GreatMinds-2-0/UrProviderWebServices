@@ -1,6 +1,8 @@
 package com.acme.urproviderwebservices.inventory.domain.model.entity;
 
 import com.acme.urproviderwebservices.shared.domain.model.BaseModel;
+import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,12 +25,14 @@ public class Product extends BaseModel {
     @NotBlank
     private String name;
 
-    //private Long supplierId;
-    //private String image;
-    //private Bool available;
     private String category;
     private String description;
     private int numberOfSales;
 
-    //Relationship with supplier
+    //Relationship
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "supplier_id", nullable = false)
+    @JsonIgnore
+    private Supplier supplier;
 }
