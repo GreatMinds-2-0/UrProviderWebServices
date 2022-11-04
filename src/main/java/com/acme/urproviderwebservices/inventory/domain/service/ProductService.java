@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> getAllProductsBySupplierId(Long supplierId);
+    List<Product> getAll();
 
     Product getByNameAndSupplierId(String name, Long supplierId);
 
