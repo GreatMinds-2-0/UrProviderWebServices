@@ -5,27 +5,25 @@ import com.acme.urproviderwebservices.shared.exception.ResourceValidationExcepti
 import com.acme.urproviderwebservices.users.store.domain.model.entity.Store;
 import com.acme.urproviderwebservices.users.store.domain.persistence.StoreRepository;
 import com.acme.urproviderwebservices.users.store.domain.service.StoreService;
-import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
-import com.acme.urproviderwebservices.users.supplier.domain.persistence.SupplierRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
-import javax.xml.validation.Validator;
+import javax.validation.Validator;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class StoreServiceImpl implements StoreService {
-    private static final String ENTITY = "store";
+    private static final String ENTITY = "Store";
 
     private final StoreRepository storeRepository;
 
     private final Validator validator;
 
-    public StoreServiceImpl(StoreRepository storeRepository,Validator validator  ) {
+    public StoreServiceImpl(StoreRepository storeRepository, Validator validator) {
         this.storeRepository=storeRepository;
         this.validator= validator;
 
@@ -35,11 +33,13 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Page<Store> getAll(Pageable pageable){return storeRepository.findAll(pageable);}
+
     @Override
     public Store getById(Long storeId){
         return storeRepository.findById(storeId)
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY, storeId));
     }
+
     @Override
     public Store create(Store store){
         Set<ConstraintViolation<Store>> violations = validator.validate(store);
@@ -53,12 +53,13 @@ public class StoreServiceImpl implements StoreService {
 
         return storeRepository.save(store);
     }
+
     @Override
     public Store update(Long storeId, Store request){
         Set<ConstraintViolation<Store>> violations = validator.validate(request);
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY,violations);
-        // Name Uniqueness validation
+        // Email Uniqueness validation
         Store storeWithEmail = storeRepository.findByEmail(request.getEmail());
         if (storeWithEmail != null && !storeWithEmail.getId().equals(storeId))
             throw new ResourceValidationException(ENTITY,
@@ -68,12 +69,11 @@ public class StoreServiceImpl implements StoreService {
                         existingStore.withName(request.getName())
                                 .withEmail(request.getEmail())
                                 .withPhoneNumber(request.getPhoneNumber())))
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY,storeId);
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
     }
 
     @Override
     public ResponseEntity<?> delete(Long storeId) {
-
         return storeRepository.findById(storeId).map(store -> {
                     storeRepository.delete(store);
                     return ResponseEntity.ok().build(); })

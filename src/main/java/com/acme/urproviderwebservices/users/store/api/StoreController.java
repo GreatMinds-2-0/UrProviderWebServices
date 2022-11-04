@@ -5,9 +5,7 @@ import com.acme.urproviderwebservices.users.store.mapping.StoreMapper;
 import com.acme.urproviderwebservices.users.store.resource.CreateStoreResource;
 import com.acme.urproviderwebservices.users.store.resource.StoreResource;
 import com.acme.urproviderwebservices.users.store.resource.UpdateStoreResource;
-import com.acme.urproviderwebservices.users.supplier.resource.CreateSupplierResource;
-import com.acme.urproviderwebservices.users.supplier.resource.SupplierResource;
-import com.acme.urproviderwebservices.users.supplier.resource.UpdateSupplierResource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/v1/store", produces = "application/json")
+@RequestMapping(value = "/api/v1/stores", produces = "application/json")
 public class StoreController {
 
     private final StoreService storeService;
@@ -38,12 +36,12 @@ public class StoreController {
     }
     @PostMapping
     public ResponseEntity<StoreResource> createStore(@Valid @RequestBody CreateStoreResource resource){
-        return new ResponseEntity<>(mapper.toResource(storeService.create(mapper.toModel(resource)))),HttpStatus.CREATED;
+        return new ResponseEntity<>(mapper.toResource(storeService.create(mapper.toModel(resource))), HttpStatus.CREATED);
     }
     @PutMapping("{storeId}")
     public StoreResource updateStore(@PathVariable Long storeId,
                                      @RequestBody UpdateStoreResource resource){
-        return mapper.toResource(storeService.update(storeId,mapper.toModel(resource)))
+        return mapper.toResource(storeService.update(storeId,mapper.toModel(resource)));
     }
     @DeleteMapping("{storeId}")
     public ResponseEntity<?> deleteStore(@PathVariable Long storeId){
