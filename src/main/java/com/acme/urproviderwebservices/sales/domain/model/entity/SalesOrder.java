@@ -18,7 +18,7 @@ public class SalesOrder extends BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean status;
+    private String status;
 
     //Relationship with Suppliers and Stores
 }
