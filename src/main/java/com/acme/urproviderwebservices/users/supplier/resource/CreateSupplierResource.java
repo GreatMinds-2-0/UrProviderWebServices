@@ -13,6 +13,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateSupplierResource {
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String supplierName;
+
     @NotNull
     @NotBlank
     @Size(max = 60)
@@ -20,8 +26,50 @@ public class CreateSupplierResource {
 
     @NotNull
     @NotBlank
+    @Size(max = 60)
+    private String lastName;
+
+
+    @NotNull
+    @NotBlank
     @Column(unique = true)
     private String email;
 
-    private long phoneNumber;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 100)
+    private String address ;
+
+    @NotNull
+    @NotBlank
+    private long ruc ;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String category ;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String description ;
+
+    @NotNull
+    @NotBlank
+    private long phone ;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String password;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    private String image;
+
+    @NotNull
+    @NotBlank
+    public long Likes ;
 }
