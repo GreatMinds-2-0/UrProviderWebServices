@@ -71,7 +71,7 @@ public class Supplier extends BaseModel {
     @NotNull
     @NotBlank
     @Size(max = 60)
-    private String Password;
+    private String password;
 
     @NotNull
     @NotBlank
