@@ -31,30 +31,29 @@ public class Store extends BaseModel {
     @NotNull
     @NotBlank
     @Column(unique = true)
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String lastName;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String address;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private long phone;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
     private String email;
     @NotNull
     @NotBlank
     @Size(max = 60)
-    private String LastName;
+    private String password;
     @NotNull
     @NotBlank
     @Size(max = 60)
-    private String Address;
-    @NotNull
-    @NotBlank
-    @Size(max = 60)
-    private long Phone;
-    @NotNull
-    @NotBlank
-    @Size(max = 60)
-    private String Email;
-    @NotNull
-    @NotBlank
-    @Size(max = 60)
-    private String Password;
-    @NotNull
-    @NotBlank
-    @Size(max = 60)
-    public String Image;
+    public String image;
 
 }
