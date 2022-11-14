@@ -20,7 +20,7 @@ public class CreateProductResource {
 
     private String description;
 
-    private boolean Available ;
+    private boolean Available;
 
     private int numberOfSales;
 
