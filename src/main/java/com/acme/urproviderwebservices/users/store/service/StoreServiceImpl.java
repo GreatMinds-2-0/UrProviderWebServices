@@ -68,7 +68,7 @@ public class StoreServiceImpl implements StoreService {
                 storeRepository.save(
                         existingStore.withName(request.getName())
                                 .withEmail(request.getEmail())
-                                .withPhoneNumber(request.getPhoneNumber())))
+                                .withPhone(request.getPhone())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
     }
 
