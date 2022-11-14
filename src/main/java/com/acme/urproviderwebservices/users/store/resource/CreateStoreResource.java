@@ -48,5 +48,5 @@ public class CreateStoreResource {
     @NotNull
     @NotBlank
     @Size(max = 60)
-    public String image;
+    private String image;
 }
