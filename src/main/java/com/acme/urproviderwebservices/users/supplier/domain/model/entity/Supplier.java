@@ -26,14 +26,67 @@ public class Supplier extends BaseModel {
     @NotNull
     @NotBlank
     @Size(max = 60)
+    private String supplierName;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
     private String name;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String lastName;
+
 
     @NotNull
     @NotBlank
     @Column(unique = true)
     private String email;
 
-    private long phoneNumber;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 100)
+    private String address ;
+
+    @NotNull
+    @NotBlank
+    private long ruc ;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String category ;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String description ;
+
+    @NotNull
+    @NotBlank
+    private long phone ;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String Password;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    private String image;
+
+    @NotNull
+    @NotBlank
+    public long Likes ;
+
+
+
+
+
+
 
     // Relationship
 
