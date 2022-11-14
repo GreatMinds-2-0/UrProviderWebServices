@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
+@Component
 public class JwtHandler {
     private static final Logger logger= LoggerFactory.getLogger(JwtHandler.class);
 
