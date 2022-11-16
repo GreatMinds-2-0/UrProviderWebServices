@@ -27,13 +27,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getById(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
+    }
+
+    @Override
     public Product getByNameAndSupplierId(String name, Long supplierId) {
         return productRepository.findByNameAndSupplierId(name, supplierId)
                 .orElseThrow(() -> new ResourceNotFoundException("No Product with this name found for Supplier"));
     }
 
     @Override
-    public ResponseEntity<?> delete(Long supplierId, Long productId) {
-        return null;
+    public ResponseEntity<?> delete(Long productId) {
+        return productRepository.findById(productId).map(product -> {
+            productRepository.delete(product);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
     }
 }

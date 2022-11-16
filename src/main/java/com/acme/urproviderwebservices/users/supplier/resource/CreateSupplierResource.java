@@ -69,7 +69,5 @@ public class CreateSupplierResource {
     @Size(max = 200)
     private String image;
 
-    @NotNull
-    @NotBlank
-    public long Likes ;
+
 }

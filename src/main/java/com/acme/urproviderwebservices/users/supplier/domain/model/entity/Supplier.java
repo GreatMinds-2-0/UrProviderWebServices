@@ -4,6 +4,8 @@ import com.acme.urproviderwebservices.inventory.domain.model.entity.Product;
 import com.acme.urproviderwebservices.shared.domain.model.BaseModel;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -78,16 +80,8 @@ public class Supplier extends BaseModel {
     @Size(max = 200)
     private String image;
 
-    @NotNull
-    @NotBlank
-    public long Likes ;
-
-
-
-
-
-
-
+    private long likes ;
+    
     // Relationship
 
     @OneToMany(cascade = CascadeType.ALL,
