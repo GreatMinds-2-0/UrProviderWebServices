@@ -74,7 +74,7 @@ public class SupplierServiceImpl implements SupplierService {
                         supplierRepository.save(
                                 existingSupplier.withName(request.getName())
                                         .withEmail(request.getEmail())
-                                        .withPhoneNumber(request.getPhoneNumber())))
+                                        .withPhoneNumber(request.getPhone())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
     }
 
