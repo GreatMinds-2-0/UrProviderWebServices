@@ -22,4 +22,13 @@ public class UpdateStoreResource {
 
     @Size(max = 200)
     private Long phoneNumber;
+    @Size(max = 20)
+    private String password;
+    @NotNull
+    @NotBlank
+    private String image;
+    @NotNull
+    @NotBlank
+    @Size(max = 20)
+    private String address;
 }
