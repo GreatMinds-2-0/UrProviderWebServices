@@ -69,7 +69,7 @@ public class StoreServiceImpl implements StoreService {
                         existingStore.withName(request.getName())
                                 .withEmail(request.getEmail())
                                 .withPhone(request.getPhone())
-                        .getAddress(request.getAddress())))
+                        ))
 
 
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
