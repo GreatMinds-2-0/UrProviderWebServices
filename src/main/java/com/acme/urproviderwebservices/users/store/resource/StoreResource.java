@@ -11,4 +11,9 @@ public class StoreResource {
     private String name;
     private String email;
     private Long phoneNumber;
+    private String password;
+    private String image;
+    private String address;
+
+
 }
