@@ -13,6 +13,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateSupplierResource {
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String supplierName;
+
     @NotNull
     @NotBlank
     @Size(max = 60)

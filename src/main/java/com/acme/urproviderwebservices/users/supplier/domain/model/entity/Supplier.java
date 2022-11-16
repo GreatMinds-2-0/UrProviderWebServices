@@ -26,6 +26,10 @@ public class Supplier extends BaseModel {
     @NotNull
     @NotBlank
     @Size(max = 60)
+    private String supplierName;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
     private String name;
 
     @NotNull

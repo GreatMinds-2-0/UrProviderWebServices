@@ -2,10 +2,6 @@ package com.acme.urproviderwebservices.users.supplier.resource;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,6 +10,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class SupplierResource {
     private Long id;
+    private String supplierName;
     private String name;
     private String lastName;
     private String image;
