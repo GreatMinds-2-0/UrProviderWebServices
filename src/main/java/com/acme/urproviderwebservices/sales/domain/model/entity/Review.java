@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.xml.transform.Source;
 
 @Getter
 @Setter
@@ -24,6 +25,8 @@ public class Review extends BaseModel {
     @NotBlank
     private String title;
 
+    @NotNull
+    @NotBlank
     private String description;
 
     //RelationShip with Store
