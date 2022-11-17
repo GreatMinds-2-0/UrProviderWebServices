@@ -15,18 +15,9 @@ public class CreateProductResource {
     @NotNull
     @NotBlank
     private String name;
-
-    @NotNull
-    @NotBlank
     private String category;
-
+    private String image;
+    private boolean available;
     private String description;
 
-    @NotNull
-    @NotBlank
-    private String image;
-
-    private int numberOfSales;
-
-    private boolean available;
 }

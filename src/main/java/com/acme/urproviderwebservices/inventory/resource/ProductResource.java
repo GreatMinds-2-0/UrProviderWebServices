@@ -14,8 +14,9 @@ public class ProductResource {
     private Long id;
     private String name;
     private String category;
-    private String description;
     private String image;
-    private int numberOfSales;
     private boolean available;
+    private String description;
+    private int numberOfSales;
+    private Long supplierId;
 }

@@ -14,9 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/suppliers", produces = "application/json")
+@RequestMapping(value = "/api/v1/suppliers")
 public class SuppliersController {
     private final SupplierService supplierService;
     private final SupplierMapper mapper;
@@ -27,8 +28,8 @@ public class SuppliersController {
     }
 
     @GetMapping
-    public Page<SupplierResource> getAllSuppliers(Pageable pageable){
-        return mapper.modelListPage(supplierService.getAll(), pageable);
+    public List<SupplierResource> getAllSuppliers(){
+        return mapper.modelListPage(supplierService.getAll());
     }
     @GetMapping("{supplierId}")
     public SupplierResource getSupplierById(@PathVariable Long supplierId) {

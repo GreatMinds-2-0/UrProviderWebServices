@@ -5,6 +5,7 @@ import com.acme.urproviderwebservices.inventory.domain.persistence.ProductReposi
 import com.acme.urproviderwebservices.inventory.domain.service.ProductService;
 import com.acme.urproviderwebservices.shared.exception.ResourceNotFoundException;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
+import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ import java.util.Set;
 public class ProductServiceImpl implements ProductService {
 
    private static final String ENTITY = "Product";
-
    private final ProductRepository productRepository;
 
    private final Validator validator;
@@ -27,20 +27,18 @@ public class ProductServiceImpl implements ProductService {
         this.validator = validator;
     }
 
-
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();
     }
 
-    @Override
+   @Override
     public Product getById(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
+                .orElseThrow(()-> new ResourceNotFoundException(ENTITY, productId));
     }
-
     @Override
-    public Product getByNameAndSupplierId(String name, Long supplierId) {
+    public Product getByNameAndSupplierId(Product name, Long supplierId) {
         return productRepository.findByNameAndSupplierId(name, supplierId)
                 .orElseThrow(() -> new ResourceNotFoundException("No Product with this name found for Supplier"));
     }

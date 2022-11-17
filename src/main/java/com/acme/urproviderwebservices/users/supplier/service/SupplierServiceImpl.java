@@ -72,17 +72,19 @@ public class SupplierServiceImpl implements SupplierService {
 
         return supplierRepository.findById(supplierId).map(existingSupplier ->
                         supplierRepository.save(
-                                existingSupplier.withName(request.getName())
-                                        .withEmail(request.getEmail())
-                                        .withPhone(request.getPhone())
-                                        .withAddress(request.getAddress())
-                                        .withCategory(request.getCategory())
-                                        .withImage(request.getImage())
+                                existingSupplier.withSupplierName(request.getName())
+                                        .withName(request.getName())
                                         .withLastName(request.getLastName())
-                                        .withDescription(request.getDescription())
-                                        .withPassword(request.getPassword())
+                                        .withImage(request.getImage())
+                                        .withEmail(request.getEmail())
+                                        .withAddress(request.getAddress())
                                         .withRuc(request.getRuc())
-                                        .withSupplierName(request.getSupplierName())))
+                                        .withCategory(request.getCategory())
+                                        .withDescription(request.getDescription())
+                                        .withPhone(request.getPhone())
+                                        .withPassword(request.getPassword())
+                                        .withLikes(request.getLikes())
+                                        ))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
     }
 

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/v1/suppliers/{supplierId}/products", produces = "application/json")
 public class SupplierProductsController {
@@ -26,10 +28,9 @@ public class SupplierProductsController {
     }
 
     @GetMapping
-    public Page<ProductResource> getAllProductsBySupplierId(@PathVariable Long supplierId,
-                                                         Pageable pageable) {
+    public List<ProductResource> getAllProductsBySupplierId(@PathVariable Long supplierId) {
         return mapper.modelListPage(supplierService.getById(supplierId)
-                .getProducts().stream().toList(), pageable);
+                .getProducts().stream().toList());
     }
 
     @PostMapping
@@ -38,6 +39,7 @@ public class SupplierProductsController {
 
         supplierService.addProductToSupplier(supplierId, resource.getName());
         return mapper.toResource(productService
-                .getByNameAndSupplierId(resource.getName(), supplierId));
+                .getByNameAndSupplierId(mapper.toModel(resource),
+                        supplierId));
     }
 }

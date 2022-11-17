@@ -5,6 +5,8 @@ import com.acme.urproviderwebservices.inventory.resource.CreateProductResource;
 import com.acme.urproviderwebservices.inventory.resource.ProductResource;
 import com.acme.urproviderwebservices.inventory.resource.UpdateProductResource;
 import com.acme.urproviderwebservices.shared.mapping.EnhancedModelMapper;
+import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
+import com.acme.urproviderwebservices.users.supplier.resource.CreateSupplierResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,8 +24,11 @@ public class ProductMapper implements Serializable {
         return mapper.map(model, ProductResource.class);
     }
 
-    public Page<ProductResource> modelListPage(List<Product> modelList, Pageable pageable) {
-        return new PageImpl<>(mapper.mapList(modelList, ProductResource.class), pageable, modelList.size());
+    public List<ProductResource> modelListPage(List<Product> modelList) {
+        return mapper.mapList(modelList, ProductResource.class);
+    }
+    public Product toModel(CreateProductResource resource) {
+        return mapper.map(resource, Product.class);
     }
 
     public Product toModel(CreateProductResource resource) {

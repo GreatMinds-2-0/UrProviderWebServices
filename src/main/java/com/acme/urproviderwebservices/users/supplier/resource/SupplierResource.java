@@ -2,6 +2,7 @@ package com.acme.urproviderwebservices.users.supplier.resource;
 
 import lombok.*;
 
+
 @Getter
 @Setter
 @With
@@ -9,15 +10,16 @@ import lombok.*;
 @AllArgsConstructor
 public class SupplierResource {
     private Long id;
-    private String SupplierName ;
-    private String Name ;
-    private String LastName ;
-    private String Email;
-    private String Address ;
-    private long Ruc ;
-    private String Category ;
-    private String Description ;
-    private long Phone ;
-    private String Password ;
-    private long Likes ;
+    private String supplierName;
+    private String name;
+    private String lastName;
+    private String image;
+    private String email;
+    private String address;
+    private long ruc;
+    private String category;
+    private String description;
+    private long phone;
+    private String password;
+    private int likes;
 }

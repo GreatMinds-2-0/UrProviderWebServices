@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class UpdateSupplierResource {
-    private Long id;
 
     @NotNull
     @NotBlank
@@ -28,45 +27,45 @@ public class UpdateSupplierResource {
     @Size(max = 60)
     private String lastName;
 
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    @Column(unique = true)
+    private String image;
 
     @NotNull
     @NotBlank
     @Column(unique = true)
+    @Size(max = 60)
     private String email;
 
-
     @NotNull
     @NotBlank
-    @Size(max = 100)
-    private String address ;
+    @Size(max = 60)
+    private String address;
 
-    @NotNull
-    @NotBlank
-    private long ruc ;
+
+    private long ruc;
 
     @NotNull
     @NotBlank
     @Size(max = 60)
-    private String category ;
-
-    @NotNull
-    @NotBlank
-    @Size(max = 60)
-    private String description ;
-
-    @NotNull
-    @NotBlank
-    private long phone ;
-
-    @NotNull
-    @NotBlank
-    @Size(max = 60)
-    private String password;
+    private String category;
 
     @NotNull
     @NotBlank
     @Size(max = 200)
-    private String image;
+    private String description;
 
+
+
+    private long phone;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 20)
+    private String password;
+
+    private int likes;
 
 }
