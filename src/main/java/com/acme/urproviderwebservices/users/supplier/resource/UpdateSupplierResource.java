@@ -66,4 +66,6 @@ public class UpdateSupplierResource {
     @Size(max = 20)
     private String password;
 
+    private int likes;
+
 }

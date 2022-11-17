@@ -37,7 +37,7 @@ public class CreateSupplierResource {
 
     @NotNull
     @NotBlank
-    @Column(unique = true)
+    @Column(unique = true)//no se repite
     @Size(max = 60)
     private String email;
 
@@ -68,5 +68,5 @@ public class CreateSupplierResource {
     @Size(max = 20)
     private String password;
 
-    private int likes;
+
 }
