@@ -81,7 +81,7 @@ public class Supplier extends BaseModel {
     private String image;
 
     private long likes ;
-    
+
     // Relationship
 
     @OneToMany(cascade = CascadeType.ALL,
