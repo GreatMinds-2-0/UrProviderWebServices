@@ -24,10 +24,11 @@ public class Product extends BaseModel {
     @NotNull
     @NotBlank
     private String name;
-
     private String category;
+    private String image;
+    private boolean available;
     private String description;
-    private int numberOfSales;
+    private int numberOfSales=1;
 
     //Relationship
 
