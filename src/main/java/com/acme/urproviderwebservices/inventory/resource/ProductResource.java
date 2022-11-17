@@ -12,12 +12,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class ProductResource {
     private Long id;
-
     private String name;
-
     private String category;
-
     private String description;
-
+    private String image;
     private int numberOfSales;
+    private boolean available;
 }
