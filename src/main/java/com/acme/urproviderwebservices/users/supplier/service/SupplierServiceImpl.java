@@ -97,11 +97,4 @@ public class SupplierServiceImpl implements SupplierService {
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
 
     }
-
-    @Override
-    public Supplier addProductToSupplier(Long supplierId, String productName) {
-        return supplierRepository.findById(supplierId).map(supplier -> {
-            return supplierRepository.save(supplier.addProduct(productName));
-        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
-    }
 }

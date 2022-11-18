@@ -1,23 +1,30 @@
 package com.acme.urproviderwebservices.inventory.resource;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-@With
-@AllArgsConstructor
-@NoArgsConstructor
-public class CreateProductResource {
+public class UpdateProductResource {
 
     @NotNull
     @NotBlank
     private String name;
+
+    @NotNull
+    @NotBlank
     private String category;
-    private String image;
-    private boolean available;
+
     private String description;
-    private Long supplierId;
+
+    @NotNull
+    @NotBlank
+    private String image;
+
+    private int numberOfSales;
+
+    private boolean available;
 }

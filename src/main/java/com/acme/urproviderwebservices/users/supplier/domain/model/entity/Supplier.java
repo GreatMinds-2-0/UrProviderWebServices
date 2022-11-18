@@ -80,27 +80,4 @@ public class Supplier extends BaseModel {
 
 
     private int likes = 1;
-
-    // Relationship
-
-    @OneToMany(cascade = CascadeType.ALL,
-    fetch = FetchType.EAGER, mappedBy = "supplier")
-    private Set<Product> products = new HashSet<>();
-
-    public Supplier addProduct(String productName) {
-        if (products == null) {
-            products = new HashSet<>();
-        }
-
-        if (!products.isEmpty()) {
-            if(products.stream().anyMatch(product -> product.getName().equals(productName)))
-                throw new ResourceValidationException("Product", "A product with the same name already exists");
-        }
-
-        products.add(new Product()
-                .withName(productName)
-                .withSupplier(this));
-
-        return this;
-    }
 }

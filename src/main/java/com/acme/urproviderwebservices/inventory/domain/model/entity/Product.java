@@ -29,11 +29,5 @@ public class Product extends BaseModel {
     private boolean available;
     private String description;
     private int numberOfSales=1;
-
-    //Relationship
-
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "supplier_id", nullable = false)
-    @JsonIgnore
-    private Supplier supplier;
+    private Long supplierId;
 }

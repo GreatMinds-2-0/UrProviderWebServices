@@ -14,5 +14,4 @@ public interface SupplierService  {
     Supplier create(Supplier supplier);
     Supplier update(Long supplierId, Supplier request);
     ResponseEntity<?> delete(Long supplierId);
-    Supplier addProductToSupplier(Long supplierId, String productName);
 }
