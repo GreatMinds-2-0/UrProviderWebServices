@@ -27,8 +27,5 @@ public class ProductsController {
     public List<ProductResource> getAllProducts(){
         return mapper.modelListPage(productService.getAll());
     }
-    @GetMapping("{id}")
-    public ProductResource getProductById(@PathVariable Long id) {
-        return mapper.toResource(productService.getById(id));
-    }
+
 }
