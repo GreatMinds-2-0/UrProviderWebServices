@@ -20,4 +20,5 @@ public class CreateProductResource {
     private boolean available;
     private String description;
 
+
 }

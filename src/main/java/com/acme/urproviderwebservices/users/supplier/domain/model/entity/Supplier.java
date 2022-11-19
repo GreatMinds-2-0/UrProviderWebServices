@@ -10,7 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -85,20 +87,23 @@ public class Supplier extends BaseModel {
 
     @OneToMany(cascade = CascadeType.ALL,
     fetch = FetchType.EAGER, mappedBy = "supplier")
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
-    public Supplier addProduct(String productName) {
+    public Supplier addProduct(Product product) {
         if (products == null) {
-            products = new HashSet<>();
+            products = new ArrayList<>();
         }
+
 
         if (!products.isEmpty()) {
-            if(products.stream().anyMatch(product -> product.getName().equals(productName)))
+            if(products.stream().anyMatch(products -> products.getName().equals(product.getName())))
                 throw new ResourceValidationException("Product", "A product with the same name already exists");
         }
-
-        products.add(new Product()
-                .withName(productName)
+        products.add(new Product().withName(product.getName())
+                        .withCategory(product.getCategory())
+                        .withImage(product.getImage())
+                        .withAvailable(product.isAvailable())
+                        .withDescription(product.getDescription())
                 .withSupplier(this));
 
         return this;

@@ -1,5 +1,6 @@
 package com.acme.urproviderwebservices.users.supplier.service;
 
+import com.acme.urproviderwebservices.inventory.domain.model.entity.Product;
 import com.acme.urproviderwebservices.shared.exception.ResourceNotFoundException;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
 import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 @Service
 public class SupplierServiceImpl implements SupplierService {
@@ -48,7 +50,7 @@ public class SupplierServiceImpl implements SupplierService {
             throw new ResourceValidationException(ENTITY, violations);
 
         // Email Uniqueness validation
-        Supplier supplierWithEmail = supplierRepository.findByEmail(supplier.getEmail());
+        Optional<Supplier> supplierWithEmail = supplierRepository.findByEmail(supplier.getEmail());
         if (supplierWithEmail != null)
             throw new ResourceValidationException(ENTITY,
                     "A supplier with the same email already exist.");
@@ -64,15 +66,14 @@ public class SupplierServiceImpl implements SupplierService {
             throw new ResourceValidationException(ENTITY, violations);
 
         // Name Uniqueness validation
-        Supplier supplierWithEmail = supplierRepository.findByEmail(request.getEmail());
+        Optional<Supplier> supplierWithEmail = supplierRepository.findByEmail(request.getEmail());
 
-        if(supplierWithEmail != null && !supplierWithEmail.getId().equals(supplierId))
+        if(supplierWithEmail.isPresent() && !supplierWithEmail.get().getId().equals(supplierId))
             throw new ResourceValidationException(ENTITY,
                     "A supplier with the same email already exists.");
 
         return supplierRepository.findById(supplierId).map(existingSupplier ->
-                        supplierRepository.save(
-                                existingSupplier.withSupplierName(request.getName())
+                        supplierRepository.save(existingSupplier.withSupplierName(request.getSupplierName())
                                         .withName(request.getName())
                                         .withLastName(request.getLastName())
                                         .withImage(request.getImage())
@@ -99,7 +100,7 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public Supplier addProductToSupplier(Long supplierId, String productName) {
+    public Supplier addProductToSupplier(Long supplierId, Product productName) {
         return supplierRepository.findById(supplierId).map(supplier -> {
             return supplierRepository.save(supplier.addProduct(productName));
         }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));

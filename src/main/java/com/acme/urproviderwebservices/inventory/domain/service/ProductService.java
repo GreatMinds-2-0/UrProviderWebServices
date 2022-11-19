@@ -10,6 +10,6 @@ public interface ProductService {
 
     Product getById(Long productId);
     Product getByNameAndSupplierId(Product name,Long id);
-
-    ResponseEntity<?> delete(Long supplierId, Long productId);
+    Product update(Long product, Product request);
+    ResponseEntity<?> delete(Long productId);
 }

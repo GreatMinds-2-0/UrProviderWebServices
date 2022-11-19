@@ -7,8 +7,6 @@ import com.acme.urproviderwebservices.users.supplier.resource.SupplierResource;
 import com.acme.urproviderwebservices.users.supplier.resource.UpdateSupplierResource;
 
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
