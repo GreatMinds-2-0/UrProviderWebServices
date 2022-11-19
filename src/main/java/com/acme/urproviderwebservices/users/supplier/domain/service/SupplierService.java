@@ -16,4 +16,9 @@ public interface SupplierService  {
     Supplier update(Long supplierId, Supplier request);
     ResponseEntity<?> delete(Long supplierId);
     Supplier addProductToSupplier(Long supplierId, Product productName);
+
+    Supplier deleteProductToSupplier(Long supplierId, Long productId);
+
+
+    Supplier updateProductToSupplier(Long supplierId, Long productId, Product product);
 }

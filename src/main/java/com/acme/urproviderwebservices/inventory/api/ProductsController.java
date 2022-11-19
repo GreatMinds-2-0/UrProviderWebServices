@@ -3,7 +3,6 @@ package com.acme.urproviderwebservices.inventory.api;
 import com.acme.urproviderwebservices.inventory.domain.service.ProductService;
 import com.acme.urproviderwebservices.inventory.mapping.ProductMapper;
 import com.acme.urproviderwebservices.inventory.resource.ProductResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,9 +27,4 @@ public class ProductsController {
     public ProductResource getProductById(@PathVariable Long productId) {
         return mapper.toResource(productService.getById(productId));
     }
-    @DeleteMapping("{productId}")
-    public ResponseEntity<?> deleteSupplier(@PathVariable Long productId) {
-        return productService.delete(productId);
-    }
-
 }

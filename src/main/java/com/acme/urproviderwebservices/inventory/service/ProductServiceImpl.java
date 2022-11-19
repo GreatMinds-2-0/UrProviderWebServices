@@ -5,14 +5,12 @@ import com.acme.urproviderwebservices.inventory.domain.persistence.ProductReposi
 import com.acme.urproviderwebservices.inventory.domain.service.ProductService;
 import com.acme.urproviderwebservices.shared.exception.ResourceNotFoundException;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
-import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -38,10 +36,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    //post
     @Override
     public Product getByNameAndSupplierId(Product product, Long supplierId){
         return productRepository.findByNameAndSupplierId(product.getName(), supplierId)
-                .orElseThrow(() -> new ResourceNotFoundException("No Criterion with this name found for Skill"));
+                .orElseThrow(() -> new ResourceNotFoundException("No Product with this name found for Supplier"));
     }
 
     @Override
@@ -50,17 +49,7 @@ public class ProductServiceImpl implements ProductService {
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        // Name Uniqueness validation
-        return productRepository.findById(productId).map(existingProduct ->
-                        productRepository.save(
-                                existingProduct.withName(request.getName())
-                                        .withCategory(request.getCategory())
-                                        .withImage(request.getImage())
-                                        .withAvailable(request.isAvailable())
-                                        .withDescription(request.getDescription())
-                                        .withNumberOfSales(request.getNumberOfSales())
-
-                        ))
+        return productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
     }
 

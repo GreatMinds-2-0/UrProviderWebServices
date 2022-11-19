@@ -68,7 +68,6 @@ public class CreateSupplierResource {
     @Size(max = 20)
     private String password;
 
-    private int likes;
 
 
 }

@@ -50,8 +50,19 @@ public class SupplierProductsController {
 
     @PutMapping("{productId}")
     public ProductResource updateProduct(@PathVariable Long productId,
-                                           @RequestBody CreateProductResource resource) {
+                                         @RequestBody CreateProductResource resource, @PathVariable Long supplierId) {
+        supplierService.updateProductToSupplier(supplierId,productId,mapper.toModel(resource));
         return mapper.toResource(productService.update(productId,mapper.toModel(resource)));
     }
+    @DeleteMapping("{productId}")
+    public  ResponseEntity<?> deleteProduct(@PathVariable Long supplierId, @PathVariable Long productId){
+        supplierService.deleteProductToSupplier(supplierId,productId);
+        return productService.delete(productId);
+    }
+
+
+
+
+
 
 }

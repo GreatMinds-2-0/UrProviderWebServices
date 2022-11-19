@@ -57,7 +57,19 @@ public class SupplierServiceImpl implements SupplierService {
         }
 
 
-        return supplierRepository.save(supplier);
+        return supplierRepository.save(new Supplier()
+                .withSupplierName(supplier.getSupplierName())
+                .withName(supplier.getName())
+                .withLastName(supplier.getLastName())
+                .withImage(supplier.getImage())
+                .withEmail(supplier.getEmail())
+                .withAddress(supplier.getAddress())
+                .withRuc(supplier.getRuc())
+                .withCategory(supplier.getCategory())
+                .withDescription(supplier.getDescription())
+                .withPhone(supplier.getPhone())
+                .withPassword(supplier.getPassword())
+        ) ;
     }
 
     @Override
@@ -103,8 +115,21 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Supplier addProductToSupplier(Long supplierId, Product productName) {
-        return supplierRepository.findById(supplierId).map(supplier -> {
-            return supplierRepository.save(supplier.addProduct(productName));
-        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
+        return supplierRepository.findById(supplierId).map(supplier ->
+                        supplierRepository.save(supplier.addProduct(productName)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
+    }
+
+    @Override
+    public Supplier deleteProductToSupplier(Long supplierId,Long productId){
+        return supplierRepository.findById(supplierId).map(supplier ->
+                        supplierRepository.save(supplier.deleteProduct(productId)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
+    }
+    @Override
+    public Supplier updateProductToSupplier(Long supplierId, Long productId, Product product){
+        return supplierRepository.findById(supplierId).map(supplier ->
+                supplierRepository.save(supplier.updateProduct(product,productId)))
+                .orElseThrow(()->new ResourceNotFoundException(ENTITY, supplierId));
     }
 }
