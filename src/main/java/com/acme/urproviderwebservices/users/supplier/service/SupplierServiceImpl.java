@@ -51,9 +51,11 @@ public class SupplierServiceImpl implements SupplierService {
 
         // Email Uniqueness validation
         Optional<Supplier> supplierWithEmail = supplierRepository.findByEmail(supplier.getEmail());
-        if (supplierWithEmail != null)
+        if (supplierWithEmail.isPresent()){
             throw new ResourceValidationException(ENTITY,
                     "A supplier with the same email already exist.");
+        }
+
 
         return supplierRepository.save(supplier);
     }

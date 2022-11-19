@@ -80,18 +80,17 @@ public class Supplier extends BaseModel {
     @Size(max = 20)
     private String password;
 
-
-    private int likes = 1;
+    private int likes = 15;
 
     // Relationship
 
     @OneToMany(cascade = CascadeType.ALL,
     fetch = FetchType.EAGER, mappedBy = "supplier")
-    private List<Product> products = new ArrayList<>();
+    private Set<Product> products = new HashSet<>();
 
     public Supplier addProduct(Product product) {
         if (products == null) {
-            products = new ArrayList<>();
+            products = new HashSet<>();
         }
 
 
