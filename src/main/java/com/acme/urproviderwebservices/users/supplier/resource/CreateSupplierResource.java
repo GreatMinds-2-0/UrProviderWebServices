@@ -46,7 +46,6 @@ public class CreateSupplierResource {
     @Size(max = 60)
     private String address;
 
-
     private long ruc;
 
     @NotNull
@@ -59,14 +58,10 @@ public class CreateSupplierResource {
     @Size(max = 200)
     private String description;
 
-
-
     private long phone;
 
     @NotNull
     @NotBlank
     @Size(max = 20)
     private String password;
-
-
 }

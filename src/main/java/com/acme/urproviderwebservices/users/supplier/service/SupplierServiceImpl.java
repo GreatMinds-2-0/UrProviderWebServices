@@ -63,7 +63,7 @@ public class SupplierServiceImpl implements SupplierService {
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        // Name Uniqueness validation
+        // Email Uniqueness validation
         Supplier supplierWithEmail = supplierRepository.findByEmail(request.getEmail());
 
         if(supplierWithEmail != null && !supplierWithEmail.getId().equals(supplierId))
@@ -83,18 +83,15 @@ public class SupplierServiceImpl implements SupplierService {
                                         .withDescription(request.getDescription())
                                         .withPhone(request.getPhone())
                                         .withPassword(request.getPassword())
-                                        .withLikes(request.getLikes())
-                                        ))
+                                        .withLikes(request.getLikes())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
     }
 
     @Override
     public ResponseEntity<?> delete(Long supplierId) {
-
         return supplierRepository.findById(supplierId).map(supplier -> {
             supplierRepository.delete(supplier);
             return ResponseEntity.ok().build(); })
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
-
     }
 }

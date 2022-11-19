@@ -26,13 +26,13 @@ public class StoreServiceImpl implements StoreService {
     public StoreServiceImpl(StoreRepository storeRepository, Validator validator) {
         this.storeRepository=storeRepository;
         this.validator= validator;
-
     }
-    @Override
-    public List<Store> getAll() {return storeRepository.findAll();}
 
     @Override
-    public Page<Store> getAll(Pageable pageable){return storeRepository.findAll(pageable);}
+    public List<Store> getAll() { return storeRepository.findAll(); }
+
+    @Override
+    public Page<Store> getAll(Pageable pageable){ return storeRepository.findAll(pageable); }
 
     @Override
     public Store getById(Long storeId){
@@ -45,6 +45,7 @@ public class StoreServiceImpl implements StoreService {
         Set<ConstraintViolation<Store>> violations = validator.validate(store);
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+
         // Email Uniqueness validation
         Store storeWithEmail = storeRepository.findByEmail(store.getEmail());
         if (storeWithEmail != null)
@@ -57,27 +58,35 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store update(Long storeId, Store request){
         Set<ConstraintViolation<Store>> violations = validator.validate(request);
+
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY,violations);
+
         // Email Uniqueness validation
         Store storeWithEmail = storeRepository.findByEmail(request.getEmail());
+
         if (storeWithEmail != null && !storeWithEmail.getId().equals(storeId))
             throw new ResourceValidationException(ENTITY,
                     "A store with the same email already exists.");
+
         return storeRepository.findById(storeId).map(existingStore ->
                 storeRepository.save(
                         existingStore.withName(request.getName())
                                 .withEmail(request.getEmail())
-                                .withPhoneNumber(request.getPhoneNumber())))
+                                .withStoreName(request.getStoreName())
+                                .withLastName(request.getLastName())
+                                .withImage(request.getImage())
+                                .withAddress(request.getAddress())
+                                .withPhone(request.getPhone())
+                                .withPassword(request.getPassword())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
     }
 
     @Override
     public ResponseEntity<?> delete(Long storeId) {
         return storeRepository.findById(storeId).map(store -> {
-                    storeRepository.delete(store);
-                    return ResponseEntity.ok().build(); })
+            storeRepository.delete(store);
+            return ResponseEntity.ok().build(); })
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
-
     }
 }

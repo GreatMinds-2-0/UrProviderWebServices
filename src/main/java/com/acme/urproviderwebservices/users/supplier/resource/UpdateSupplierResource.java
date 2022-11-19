@@ -67,5 +67,4 @@ public class UpdateSupplierResource {
     private String password;
 
     private int likes;
-
 }

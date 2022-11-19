@@ -9,6 +9,11 @@ import lombok.*;
 public class StoreResource {
     private Long id;
     private String name;
+    private String lastName;
+    private String image;
+    private String storeName;
     private String email;
-    private Long phoneNumber;
+    private String address;
+    private long phone;
+    private String password;
 }

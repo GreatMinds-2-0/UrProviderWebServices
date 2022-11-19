@@ -20,8 +20,8 @@ public class StoreMapper implements Serializable {
     public StoreResource toResource(Store model) {
         return mapper.map(model, StoreResource.class);
     }
-    public Page<StoreResource> modelListPage(List<Store> modelList, Pageable pageable) {
-        return new PageImpl<>(mapper.mapList(modelList, StoreResource.class), pageable, modelList.size());
+    public List<StoreResource> modelListPage(List<Store> modelList) {
+        return mapper.mapList(modelList, StoreResource.class);
     }
 
     public Store toModel(CreateStoreResource resource) {

@@ -2,7 +2,6 @@ package com.acme.urproviderwebservices.users.supplier.resource;
 
 import lombok.*;
 
-
 @Getter
 @Setter
 @With

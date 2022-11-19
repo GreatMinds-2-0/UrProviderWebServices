@@ -14,9 +14,6 @@ import java.util.List;
 public class SupplierMapper implements Serializable {
     @Autowired
     EnhancedModelMapper mapper;
-    //Object Mapping
-    //public SupplierResource
-    //public Supplier toModel(CreateSupplierResource resource){  }
     public SupplierResource toResource(Supplier model) {
         return mapper.map(model, SupplierResource.class);
     }

@@ -27,8 +27,35 @@ public class Store extends BaseModel {
 
     @NotNull
     @NotBlank
+    @Size(max = 60)
+    private String lastName;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
     @Column(unique = true)
+    private String image;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String storeName;
+
+    @NotNull
+    @NotBlank
+    @Column(unique = true)
+    @Size(max = 60)
     private String email;
 
-    private long phoneNumber;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String address;
+
+    private long phone;
+
+    @NotNull
+    @NotBlank
+    @Size(max = 20)
+    private String password;
 }
