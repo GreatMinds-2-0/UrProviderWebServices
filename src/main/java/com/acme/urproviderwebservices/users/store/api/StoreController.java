@@ -35,8 +35,8 @@ public class StoreController {
 
     }
     @PostMapping
-    public ResponseEntity<StoreResource> createStore(@Valid @RequestBody CreateStoreResource resource){
-        return new ResponseEntity<>(mapper.toResource(storeService.create(mapper.toModel(resource))), HttpStatus.CREATED);
+    public StoreResource createStore(@Valid @RequestBody CreateStoreResource resource){
+        return mapper.toResource(storeService.create(mapper.toModel(resource)));
     }
     @PutMapping("{storeId}")
     public StoreResource updateStore(@PathVariable Long storeId,
