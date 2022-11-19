@@ -114,7 +114,7 @@ public class Supplier extends BaseModel {
     //Update Product by supplier
     public  Supplier updateProduct(Product product,Long productId ){
         if (!products.isEmpty()) {
-            if(products.stream().anyMatch(products -> products.getName().equals(product.getName())))
+            if(products.stream().anyMatch(products -> (products.getName().equals(product.getName()))&&(!products.getId().equals(productId))))
                 throw new ResourceValidationException("Product", "A product with the same name already exists");
         }
 

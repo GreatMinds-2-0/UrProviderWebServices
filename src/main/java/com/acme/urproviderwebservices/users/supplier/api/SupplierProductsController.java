@@ -37,6 +37,10 @@ public class SupplierProductsController {
         return mapper.modelListPage(supplierService.getById(supplierId)
                 .getProducts().stream().toList());
     }
+    @GetMapping("{productId}")
+    public ProductResource getProductById(@PathVariable Long productId, @PathVariable Long supplierId) {
+        return mapper.toResource(productService.getById(supplierId,productId));
+    }
 
     @PostMapping
     public ResponseEntity <ProductResource> createProduct(@PathVariable Long supplierId,
