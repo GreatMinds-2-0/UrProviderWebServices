@@ -66,9 +66,14 @@ public class StoreServiceImpl implements StoreService {
                     "A store with the same email already exists.");
         return storeRepository.findById(storeId).map(existingStore ->
                 storeRepository.save(
-                        existingStore.withName(request.getName())
+                        existingStore.withStoreName(request.getStoreName())
+                                .withName(request.getName())
+                                .withLastName(request.getLastName())
                                 .withEmail(request.getEmail())
-                                .withPhoneNumber(request.getPhoneNumber())))
+                                .withPassword(request.getPassword())
+                                .withPhone(request.getPhone())
+                                .withAddress(request.getAddress())
+                                .withImage(request.getImage())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
     }
 

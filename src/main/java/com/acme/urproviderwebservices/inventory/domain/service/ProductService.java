@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ProductService {
     List<Product> getAll();
-
     Product getById(Long productId);
+    Product getById(Long supplierID,Long productId);
     Product getByNameAndSupplierId(Product name,Long id);
-
-    ResponseEntity<?> delete(Long supplierId, Long productId);
+    Product update(Long productId, Product request);
+    ResponseEntity<?> delete(Long productId);
 }

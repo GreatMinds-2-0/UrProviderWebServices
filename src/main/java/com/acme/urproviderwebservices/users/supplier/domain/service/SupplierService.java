@@ -1,5 +1,6 @@
 package com.acme.urproviderwebservices.users.supplier.domain.service;
 
+import com.acme.urproviderwebservices.inventory.domain.model.entity.Product;
 import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,5 +15,10 @@ public interface SupplierService  {
     Supplier create(Supplier supplier);
     Supplier update(Long supplierId, Supplier request);
     ResponseEntity<?> delete(Long supplierId);
-    Supplier addProductToSupplier(Long supplierId, String productName);
+    Supplier addProductToSupplier(Long supplierId, Product productName);
+
+    Supplier deleteProductToSupplier(Long supplierId, Long productId);
+
+
+    Supplier updateProductToSupplier(Long supplierId, Long productId, Product product);
 }

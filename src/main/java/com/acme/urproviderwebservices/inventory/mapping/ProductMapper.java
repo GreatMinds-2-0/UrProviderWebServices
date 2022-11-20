@@ -19,9 +19,7 @@ public class ProductMapper implements Serializable {
     @Autowired
     EnhancedModelMapper mapper;
 
-    public ProductResource toResource(Product model) {
-        return mapper.map(model, ProductResource.class);
-    }
+    public ProductResource toResource(Product model) { return mapper.map(model, ProductResource.class);    }
 
     public List<ProductResource> modelListPage(List<Product> modelList) {
         return mapper.mapList(modelList, ProductResource.class);
