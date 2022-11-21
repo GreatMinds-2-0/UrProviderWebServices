@@ -59,7 +59,7 @@ public class SupplierProductsController {
         return mapper.toResource(productService.update(productId,mapper.toModel(resource)));
     }
     @DeleteMapping("{productId}")
-    public  ResponseEntity<?> deleteProduct(@PathVariable Long supplierId, @PathVariable Long productId){
+    public ResponseEntity<?> deleteProduct(@PathVariable Long supplierId, @PathVariable Long productId){
         supplierService.deleteProductToSupplier(supplierId,productId);
         return productService.delete(productId);
     }

@@ -1,5 +1,6 @@
 package com.acme.urproviderwebservices.users.store.domain.model.entity;
 
+import com.acme.urproviderwebservices.sales.domain.model.entity.SalesOrder;
 import com.acme.urproviderwebservices.shared.domain.model.BaseModel;
 import lombok.*;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -53,4 +56,39 @@ public class Store extends BaseModel {
     @NotBlank
     @Size(max = 200)
     private String image;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, mappedBy = "store")
+    private List<SalesOrder> salesOrders = new ArrayList<>();
+
+    public Store addSalesOrder(SalesOrder salesOrder) {
+        if (salesOrders == null) {
+            salesOrders = new ArrayList<>();
+        }
+
+        salesOrders.add(new SalesOrder().withStatus(salesOrder.getStatus())
+                .withDate(salesOrder.getDate())
+                .withDescription(salesOrder.getDescription())
+                .withStore(this));
+
+        return this;
+    }
+
+    public Store deleteSalesOrder(long salesOrderId){
+        SalesOrder salesOrder= salesOrders.stream().filter(s -> s.getId()==salesOrderId).findAny().orElse(null);
+        salesOrders.remove(salesOrder);
+        return this;
+    }
+
+    public Store updateSalesOrder(SalesOrder salesOrder,Long salesOrderId ){
+
+        SalesOrder item= salesOrders.stream().filter(s -> s.getId().equals(salesOrderId)).findAny().orElse(null);
+        int index= salesOrders.indexOf(item);
+        salesOrders.set(index,item
+                .withStatus(salesOrder.getStatus())
+                .withDate(salesOrder.getDate())
+                .withDescription(salesOrder.getDescription()));
+
+        return this;
+    }
 }
