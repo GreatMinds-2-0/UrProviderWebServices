@@ -5,14 +5,19 @@ import com.acme.urproviderwebservices.inventory.mapping.ProductMapper;
 import com.acme.urproviderwebservices.inventory.resource.CreateProductResource;
 import com.acme.urproviderwebservices.inventory.resource.ProductResource;
 import com.acme.urproviderwebservices.users.supplier.domain.service.SupplierService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/suppliers/{supplierId}/products", produces = "application/json")
+@Tag(name = "products-controller", description = "Create, read, update and delete products by supplier")
 public class SupplierProductsController {
 
     private final SupplierService supplierService;
@@ -32,14 +37,36 @@ public class SupplierProductsController {
         return mapper.modelListPage(supplierService.getById(supplierId)
                 .getProducts().stream().toList());
     }
+    @GetMapping("{productId}")
+    public ProductResource getProductById(@PathVariable Long productId, @PathVariable Long supplierId) {
+        return mapper.toResource(productService.getById(supplierId,productId));
+    }
 
     @PostMapping
-    public ProductResource createProduct(@PathVariable Long supplierId,
-                                         @RequestBody CreateProductResource resource) {
-
-        supplierService.addProductToSupplier(supplierId, resource.getName());
-        return mapper.toResource(productService
-                .getByNameAndSupplierId(mapper.toModel(resource),
-                        supplierId));
+    public ResponseEntity <ProductResource> createProduct(@PathVariable Long supplierId,
+                                                          @Valid  @RequestBody CreateProductResource resource) {
+        // product name Uniqueness validation
+        supplierService.addProductToSupplier(supplierId,mapper.toModel(resource));
+        //publish product
+        return new ResponseEntity<>(mapper.toResource(productService.getByNameAndSupplierId(mapper.toModel(resource),
+                        supplierId)), HttpStatus.CREATED);
     }
+
+    @PutMapping("{productId}")
+    public ProductResource updateProduct(@PathVariable Long productId,
+                                         @RequestBody CreateProductResource resource, @PathVariable Long supplierId) {
+        supplierService.updateProductToSupplier(supplierId,productId,mapper.toModel(resource));
+        return mapper.toResource(productService.update(productId,mapper.toModel(resource)));
+    }
+    @DeleteMapping("{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long supplierId, @PathVariable Long productId){
+        supplierService.deleteProductToSupplier(supplierId,productId);
+        return productService.delete(productId);
+    }
+
+
+
+
+
+
 }

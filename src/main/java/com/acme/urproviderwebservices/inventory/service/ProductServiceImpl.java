@@ -5,7 +5,6 @@ import com.acme.urproviderwebservices.inventory.domain.persistence.ProductReposi
 import com.acme.urproviderwebservices.inventory.domain.service.ProductService;
 import com.acme.urproviderwebservices.shared.exception.ResourceNotFoundException;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
-import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
    private static final String ENTITY = "Product";
    private final ProductRepository productRepository;
-
-   private final Validator validator;
-
+    private final Validator validator;
     public ProductServiceImpl(ProductRepository productRepository, Validator validator) {
         this.productRepository = productRepository;
         this.validator = validator;
@@ -32,48 +29,43 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-   @Override
+    @Override
     public Product getById(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY, productId));
     }
+
     @Override
-    public Product getByNameAndSupplierId(Product name, Long supplierId) {
-        return productRepository.findByNameAndSupplierId(name, supplierId)
-                .orElseThrow(() -> new ResourceNotFoundException("No Product with this name found for Supplier"));
+    public Product getById(Long supplierId,Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(()-> new ResourceNotFoundException(ENTITY, productId));
     }
 
-    @Override
-    public Product create(Product product) {
-        Set<ConstraintViolation<Product>> violations = validator.validate(product);
-        if(!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY, violations);
 
-        return productRepository.save(product);
+    //post
+    @Override
+    public Product getByNameAndSupplierId(Product product, Long supplierId){
+        return productRepository.findByNameAndSupplierId(product.getName(), supplierId)
+                .orElseThrow(() -> new ResourceNotFoundException("No Product with this name found for Supplier"));
     }
 
     @Override
     public Product update(Long productId, Product request) {
         Set<ConstraintViolation<Product>> violations = validator.validate(request);
-        if(!violations.isEmpty())
+        if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        return productRepository.findById(productId).map(product ->
-                productRepository.save(
-                        product.withName(request.getName())
-                                .withCategory(request.getCategory())
-                                .withDescription(request.getDescription())
-                                .withImage(request.getImage())
-                                .withNumberOfSales(request.getNumberOfSales())
-                                .withAvailable(request.isAvailable())))
+        return productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
     }
+
+
 
     @Override
     public ResponseEntity<?> delete(Long productId) {
         return productRepository.findById(productId).map(product -> {
-            productRepository.delete(product);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
+                    productRepository.delete(product);
+                    return ResponseEntity.ok().build(); })
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, productId));
     }
 }

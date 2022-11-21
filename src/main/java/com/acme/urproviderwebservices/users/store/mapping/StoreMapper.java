@@ -5,6 +5,8 @@ import com.acme.urproviderwebservices.users.store.domain.model.entity.Store;
 import com.acme.urproviderwebservices.users.store.resource.CreateStoreResource;
 import com.acme.urproviderwebservices.users.store.resource.StoreResource;
 import com.acme.urproviderwebservices.users.store.resource.UpdateStoreResource;
+import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
+import com.acme.urproviderwebservices.users.supplier.resource.SupplierResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class StoreMapper implements Serializable {
     @Autowired
@@ -23,6 +24,10 @@ public class StoreMapper implements Serializable {
     public Page<StoreResource> modelListPage(List<Store> modelList, Pageable pageable) {
         return new PageImpl<>(mapper.mapList(modelList, StoreResource.class), pageable, modelList.size());
     }
+    public List<StoreResource> modelListPage(List<Store> modelList) {
+        return mapper.mapList(modelList, StoreResource.class);
+    }
+
 
     public Store toModel(CreateStoreResource resource) {
         return mapper.map(resource, Store.class);

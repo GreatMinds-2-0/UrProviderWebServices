@@ -16,12 +16,27 @@ public class CreateStoreResource {
     @NotNull
     @NotBlank
     @Size(max = 60)
-    private String name;
-
+    private String storeName;
     @NotNull
     @NotBlank
-    @Column(unique = true)
-    private String email;
+    @Size(max = 60)
+    private String name;
 
-    private long phoneNumber;
+    @Size(max = 60)
+    private String lastName;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String email;
+    @NotNull
+    @NotBlank
+    @Size(max = 60)
+    private String password;
+    private Long phone;
+
+    @Size(max = 60)
+    private String address;
+
+    @Size(max = 200)
+    private String image;
 }

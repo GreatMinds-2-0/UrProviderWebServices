@@ -7,8 +7,6 @@ import com.acme.urproviderwebservices.users.supplier.resource.SupplierResource;
 import com.acme.urproviderwebservices.users.supplier.resource.UpdateSupplierResource;
 
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +35,8 @@ public class SuppliersController {
     }
 
     @PostMapping
-    public ResponseEntity<SupplierResource> createSupplier(@Valid @RequestBody CreateSupplierResource resource) {
-        return new ResponseEntity<>(mapper.toResource(supplierService.create(mapper.toModel(resource))), HttpStatus.CREATED);
+    public SupplierResource createSupplier(@RequestBody CreateSupplierResource resource) {
+        return mapper.toResource(supplierService.create(mapper.toModel(resource)));
     }
     @PutMapping("{supplierId}")
     public SupplierResource updateSupplier(@PathVariable Long supplierId,
