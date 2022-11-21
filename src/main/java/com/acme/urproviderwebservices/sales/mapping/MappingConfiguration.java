@@ -9,4 +9,6 @@ public class MappingConfiguration {
     public SalesOrderMapper salesOrderMapper() {
         return new SalesOrderMapper();
     }
+    @Bean
+    public ReviewMapper reviewMapper(){return new ReviewMapper();}
 }
