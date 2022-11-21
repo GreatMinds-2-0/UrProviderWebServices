@@ -1,5 +1,6 @@
 package com.acme.urproviderwebservices.users.store.service;
 
+import com.acme.urproviderwebservices.sales.domain.model.entity.SalesOrder;
 import com.acme.urproviderwebservices.shared.exception.ResourceNotFoundException;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
 import com.acme.urproviderwebservices.users.store.domain.model.entity.Store;
@@ -66,9 +67,14 @@ public class StoreServiceImpl implements StoreService {
                     "A store with the same email already exists.");
         return storeRepository.findById(storeId).map(existingStore ->
                 storeRepository.save(
-                        existingStore.withName(request.getName())
+                        existingStore.withStoreName(request.getStoreName())
+                                .withName(request.getName())
+                                .withLastName(request.getLastName())
                                 .withEmail(request.getEmail())
-                                .withPhoneNumber(request.getPhoneNumber())))
+                                .withPassword(request.getPassword())
+                                .withPhone(request.getPhone())
+                                .withAddress(request.getAddress())
+                                .withImage(request.getImage())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
     }
 
@@ -79,5 +85,26 @@ public class StoreServiceImpl implements StoreService {
                     return ResponseEntity.ok().build(); })
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
 
+    }
+
+    @Override
+    public Store addSalesOrderToStore(Long storeId, SalesOrder salesOrder) {
+        return storeRepository.findById(storeId).map(store ->
+                storeRepository.save(store.addSalesOrder(salesOrder)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
+    }
+
+    @Override
+    public Store deleteSalesOrderToStore(Long storeId, Long salesOrderId) {
+        return storeRepository.findById(storeId).map(store ->
+                storeRepository.save(store.deleteSalesOrder(salesOrderId)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
+    }
+
+    @Override
+    public Store updateSalesOrderToStore(Long storeId, Long salesOrderId, SalesOrder salesOrder) {
+        return storeRepository.findById(storeId).map(store ->
+                storeRepository.save(store.updateSalesOrder(salesOrder, salesOrderId)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, storeId));
     }
 }

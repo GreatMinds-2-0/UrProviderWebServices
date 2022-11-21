@@ -23,8 +23,8 @@ public class SupplierMapper implements Serializable {
     public SupplierResource toResource(Supplier model) {
         return mapper.map(model, SupplierResource.class);
     }
-    public Page<SupplierResource> modelListPage(List<Supplier> modelList, Pageable pageable) {
-        return new PageImpl<>(mapper.mapList(modelList, SupplierResource.class), pageable, modelList.size());
+    public List<SupplierResource> modelListPage(List<Supplier> modelList) {
+        return mapper.mapList(modelList, SupplierResource.class);
     }
 
     public Supplier toModel(CreateSupplierResource resource) {
@@ -34,5 +34,7 @@ public class SupplierMapper implements Serializable {
     public Supplier toModel(UpdateSupplierResource resource) {
         return mapper.map(resource, Supplier.class);
     }
+
+
 
 }
