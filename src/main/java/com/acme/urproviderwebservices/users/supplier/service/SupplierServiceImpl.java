@@ -1,6 +1,7 @@
 package com.acme.urproviderwebservices.users.supplier.service;
 
 import com.acme.urproviderwebservices.inventory.domain.model.entity.Product;
+import com.acme.urproviderwebservices.sales.domain.model.entity.Review;
 import com.acme.urproviderwebservices.shared.exception.ResourceNotFoundException;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
 import com.acme.urproviderwebservices.users.supplier.domain.model.entity.Supplier;
@@ -114,6 +115,12 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
+    public Supplier updateProductToSupplier(Long supplierId, Long productId, Product product){
+        return supplierRepository.findById(supplierId).map(supplier ->
+                        supplierRepository.save(supplier.updateProduct(product,productId)))
+                .orElseThrow(()->new ResourceNotFoundException(ENTITY, supplierId));
+    }
+    @Override
     public Supplier addProductToSupplier(Long supplierId, Product productName) {
         return supplierRepository.findById(supplierId).map(supplier ->
                         supplierRepository.save(supplier.addProduct(productName)))
@@ -127,9 +134,23 @@ public class SupplierServiceImpl implements SupplierService {
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
     }
     @Override
-    public Supplier updateProductToSupplier(Long supplierId, Long productId, Product product){
+    public Supplier updateReviewToSupplier(Long supplierId, Long reviewId, Review review){
         return supplierRepository.findById(supplierId).map(supplier ->
-                supplierRepository.save(supplier.updateProduct(product,productId)))
+                supplierRepository.save(supplier.updateReview(review,reviewId)))
                 .orElseThrow(()->new ResourceNotFoundException(ENTITY, supplierId));
     }
+    @Override
+    public Supplier addReviewToSupplier(Long supplierId, Review reviewTitle) {
+        return supplierRepository.findById(supplierId).map(supplier ->
+                        supplierRepository.save(supplier.addReview(reviewTitle)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
+    }
+
+    @Override
+    public Supplier deleteReviewToSupplier(Long supplierId,Long reviewId){
+        return supplierRepository.findById(supplierId).map(supplier ->
+                        supplierRepository.save(supplier.deleteReview(reviewId)))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, supplierId));
+    }
+
 }

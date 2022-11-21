@@ -1,9 +1,12 @@
 package com.acme.urproviderwebservices.users.supplier.domain.model.entity;
 
 import com.acme.urproviderwebservices.inventory.domain.model.entity.Product;
+import com.acme.urproviderwebservices.sales.domain.model.entity.Review;
 import com.acme.urproviderwebservices.shared.domain.model.BaseModel;
 import com.acme.urproviderwebservices.shared.exception.ResourceValidationException;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 import javax.persistence.*;
@@ -79,10 +82,14 @@ public class Supplier extends BaseModel {
     private int likes = 1;
 
     // Relationship
-
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL,
-    fetch = FetchType.EAGER, mappedBy = "supplier")
+    mappedBy = "supplier")
     private List<Product> products = new ArrayList<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "supplier")
+    private List<Review> reviews = new ArrayList<>();
 
     //Create Product by supplier
     public Supplier addProduct(Product product) {
@@ -126,6 +133,48 @@ public class Supplier extends BaseModel {
                .withImage(product.getImage())
                .withAvailable(product.isAvailable())
                .withDescription(product.getDescription()));
+
+        return this;
+    }
+    //Create Review by supplier
+
+    public Supplier addReview(Review review) {
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+
+
+        if (!reviews.isEmpty()) {
+            if(reviews.stream().anyMatch(reviews -> reviews.getTitle().equals(review.getTitle())))
+                throw new ResourceValidationException("Review", "A review with the same title already exists");
+        }
+        reviews.add(new Review().withTitle(review.getTitle())
+                .withDescription(review.getDescription())
+                        .withScore(review.getScore())
+                .withSupplier(this));
+
+        return this;
+    }
+    //Delete Review by supplier
+    public Supplier deleteReview(long reviewId){
+        Review review= reviews.stream().filter(p -> p.getId()==reviewId).findAny().orElse(null);
+        reviews.remove(review);
+        return this;
+    }
+
+    //Update Review by supplier
+    public  Supplier updateReview(Review review,Long reviewId ){
+        if (!reviews.isEmpty()) {
+            if(reviews.stream().anyMatch(reviews -> (reviews.getTitle().equals(review.getTitle()))&&(!reviews.getId().equals(reviewId))))
+                throw new ResourceValidationException("Review", "A review with the same title already exists");
+        }
+
+        Review item= reviews.stream().filter(p -> p.getId().equals(reviewId)).findAny().orElse(null);
+        int index= reviews.indexOf(item);
+        reviews.set(index,item
+                .withTitle(review.getTitle())
+                .withDescription(review.getDescription())
+                .withScore(review.getScore()));
 
         return this;
     }
